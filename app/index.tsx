@@ -6,6 +6,7 @@ import { View, Text } from 'react-native'
 import { Session } from '@supabase/supabase-js'
 import { supabase } from '@/lib/superbase'
 import Auth from '@/components/Auth'
+import HomePage from './(HomePage)'
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null)
@@ -21,10 +22,15 @@ export default function App() {
   }, [])
   console.log(session);
   
+  if (!session) {
+    return (
+      <Auth/>
+    )
+  }
+
   return (
-    <View>
-      <Auth />
-      {session && session.user && <Text>{session.user.id}</Text>}
-    </View>
+    <>
+      <HomePage/>
+    </>
   )
 }

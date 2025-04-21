@@ -35,10 +35,6 @@ export default function Auth() {
     setLoading(false)
   }
 
-  async function signOut (){
-    await supabase.auth.signOut()
-  }
-
   return (
     <View style={styles.container}>
       <View style={[styles.verticallySpaced, styles.mt20]}>
@@ -67,10 +63,6 @@ export default function Auth() {
       </View>
       <TouchableOpacity style={styles.verticallySpaced} onPress={() => signUpWithEmail()}>
         <Text>Sign up</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.verticallySpaced} onPress={() => signOut()}>
-        <Text>Sign out</Text>
       </TouchableOpacity>
     </View>
   )
