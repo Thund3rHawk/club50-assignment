@@ -1,5 +1,15 @@
-import { Stack } from "expo-router";
+import { SessionProvider, useSession } from "@/context/AuthContext";
+import { Slot } from "expo-router";
+
 
 export default function RootLayout() {
-  return <Stack />;
+
+  const {session} = useSession()
+  console.log("session from context:" , session);
+
+  return (
+    <SessionProvider>
+      <Slot />
+    </SessionProvider>
+  );
 }

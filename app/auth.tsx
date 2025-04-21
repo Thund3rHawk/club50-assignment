@@ -1,21 +1,18 @@
 import React, { useState } from 'react'
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-
 import { Button, Input } from '@rneui/themed'
 import { supabase } from '@/lib/superbase'
 
-export default function Auth() {
+export default function auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-
   async function signInWithEmail() {
     setLoading(true)
     const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     })
-
     if (error) Alert.alert(error.message)
     setLoading(false)
   }
