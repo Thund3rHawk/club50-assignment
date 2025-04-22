@@ -1,12 +1,21 @@
-import { useSession } from "@/context/AuthContext";
+// app/(app)/_layout.tsx
+import useSession from "@/hooks/useSession";
 import { Redirect, Stack } from "expo-router";
+import { Text, View } from "react-native";
 
 export default function AppLayout() {
-  
-  const {session} = useSession()
+  const { session, loading } = useSession();
+    console.log(session);
+    
+  if (loading) {
+    // Optionally show a loading screen
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>Loading session...</Text>
+      </View>
+    );
+  }
 
-  console.log("the current session is: ", session);
-  
   // Redirect if not authenticated
   if (!session) {
     return <Redirect href="/auth" />;

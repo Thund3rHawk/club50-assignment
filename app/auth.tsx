@@ -1,20 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { Button, Input } from '@rneui/themed'
 import { supabase } from '@/lib/superbase'
+import useSession from '@/hooks/useSession'
+import { router } from 'expo-router'
+
 
 export default function auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  
   async function signInWithEmail() {
     setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error, data } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     })
     if (error) Alert.alert(error.message)
     setLoading(false)
+    if (data.session) router.replace('/(app)')
   }
 
   async function signUpWithEmail() {
