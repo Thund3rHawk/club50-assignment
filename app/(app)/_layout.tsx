@@ -1,29 +1,21 @@
-// app/(app)/_layout.tsx
+
 import useSession from "@/hooks/useSession";
 import { Redirect, Stack } from "expo-router";
-import { Text, View } from "react-native";
+import { StatusBar, Text, View } from "react-native";
 
 export default function AppLayout() {
-  const { session, loading } = useSession();
-    console.log(session);
-    
-  if (loading) {
-    // Optionally show a loading screen
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Loading session...</Text>
-      </View>
-    );
-  }
+  const { session } = useSession();   
 
-  // Redirect if not authenticated
   if (!session) {
     return <Redirect href="/auth" />;
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="index" />
-    </Stack>
+    <>
+      <StatusBar barStyle= 'dark-content' />
+      <Stack screenOptions={{headerShown: true}}>
+        <Stack.Screen name="homepage" options={{headerTitle: "HomePage"}} />
+      </Stack>
+    </>
   );
 }
