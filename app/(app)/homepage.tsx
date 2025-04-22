@@ -17,7 +17,9 @@ const HomePage = () => {
 
   return (
     <View className="h-screen flex justify-center items-center gap-10">
-      <Text className="font-bold text-[16px]">Hello 🖐️,  {session?.user.user_metadata.email}</Text>
+      <Text className="font-bold text-[16px]">
+        Hello 🖐️, {session?.user.user_metadata.email}
+      </Text>
       <TouchableOpacity
         onPress={() => signOut()}
         className="p-4 rounded-lg flex flex-row justify-center items-center bg-cyan-300"

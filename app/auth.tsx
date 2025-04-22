@@ -1,78 +1,100 @@
-import React, { useState, useEffect } from 'react'
-import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { Button, Input } from '@rneui/themed'
-import { supabase } from '@/lib/superbase'
-import useSession from '@/hooks/useSession'
-import { router } from 'expo-router'
-
+import React, { useState } from "react";
+import {
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Input } from "@rneui/themed";
+import { supabase } from "@/lib/superbase";
+import { router } from "expo-router";
+import Entypo from "@expo/vector-icons/Entypo";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 export default function auth() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
   async function signInWithEmail() {
-    setLoading(true)
+    setLoading(true);
     const { error, data } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
-    })
-    if (error) Alert.alert(error.message)
-    setLoading(false)
-    if (data.session) router.replace('/(app)/homepage')
+    });
+    if (error) Alert.alert(error.message);
+    setLoading(false);
+    if (data.session) router.replace("/(app)/homepage");
   }
 
   async function signUpWithEmail() {
-    setLoading(true)
+    setLoading(true);
     const {
       data: { session },
       error,
     } = await supabase.auth.signUp({
       email: email,
       password: password,
-    })
+    });
 
-    if (error) Alert.alert(error.message)
-    if (!session) Alert.alert('Please check your inbox for email verification!')
-    setLoading(false)
+    if (error) Alert.alert(error.message);
+    if (!session)
+      Alert.alert("Please check your inbox for email verification!");
+    setLoading(false);
   }
 
   return (
-    <View className='p-8 flex items-center justify-center h-screen'>
-      <View className='border border-black rounded-full p-10 bg-gray-100'>
-      <Image source={require('../assets/images/user.png')} className='h-32 w-32 m-auto' />
-      </View>
-      <View className='w-[95%] m-auto border border-black p-3 rounded-lg' >
-        <View style={[styles.verticallySpaced, styles.mt20]}>
-          <Input
-            label="Email"
-            leftIcon={{ type: 'font-awesome', name: 'envelope' }}
-            onChangeText={(text) => setEmail(text)}
-            value={email}
-            placeholder="email@address.com"
-            autoCapitalize={'none'}
+    <ScrollView>
+      <View className="p-4 flex items-center justify-center h-screen">
+        <View className="border border-black rounded-full p-10 bg-gray-100">
+          <Image
+            source={require("../assets/images/user.png")}
+            className="h-32 w-32 m-auto"
           />
         </View>
-        <View style={styles.verticallySpaced}>
-          <Input
-            label="Password"
-            leftIcon={{ type: 'font-awesome', name: 'lock' }}
-            onChangeText={(text) => setPassword(text)}
-            value={password}
-            secureTextEntry={true}
-            placeholder="Password"
-            autoCapitalize={'none'}
-          />
+        <View className="w-[100%] m-auto border border-black p-3 rounded-lg">
+          <View style={[styles.verticallySpaced, styles.mt20]}>
+            <Input
+              label="Email"
+              leftIcon={<MaterialIcons name="email" size={24} color="gray" />}
+              onChangeText={(text) => setEmail(text)}
+              value={email}
+              labelStyle={{ color: "black" }}
+              placeholder="Enter your email"
+              autoCapitalize={"none"}
+            />
+          </View>
+          <View style={styles.verticallySpaced}>
+            <Input
+              label="Password"
+              leftIcon={<Entypo name="lock" size={24} color="gray" />}
+              onChangeText={(text) => setPassword(text)}
+              value={password}
+              secureTextEntry={true}
+              labelStyle={{ color: "black" }}
+              placeholder="Enter your password"
+              autoCapitalize={"none"}
+            />
+          </View>
+          <TouchableOpacity
+            className="p-4 w-full rounded-lg border border-cyan-600 my-2"
+            onPress={() => signInWithEmail()}
+          >
+            <Text className="text-center font-semibold">Sign In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="p-4 w-full rounded-lg bg-[#7AC6D2]"
+            onPress={() => signUpWithEmail()}
+          >
+            <Text className="text-center font-semibold">Sign Up</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity className='p-4 w-full rounded-lg border border-cyan-300 my-2' onPress={() => signInWithEmail()}>
-        <Text className='text-center'>Sign In</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className='p-4 w-full rounded-lg bg-cyan-300' onPress={() => signUpWithEmail()}>
-          <Text className='text-center'>Sign up</Text>
-        </TouchableOpacity>
       </View>
-    </View>
-  )
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -83,9 +105,9 @@ const styles = StyleSheet.create({
   verticallySpaced: {
     paddingTop: 4,
     paddingBottom: 4,
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
   },
   mt20: {
     marginTop: 20,
   },
-})
+});

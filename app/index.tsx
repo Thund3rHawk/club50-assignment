@@ -11,13 +11,13 @@ export default function SplashScreen() {
 
   return (
     <View className="h-screen bg-gray-100">
-        <View className="m-auto">
-            <Image
-                source={require ("../assets/images/man.png")}
-                className="h-52 w-52 m-auto"
-            />
-            <Text className="text-center text-2xl mt-10"> Welcome to My App</Text>
-        </View>
+      <View className="m-auto">
+        <Image
+          source={require("../assets/images/man.png")}
+          className="h-52 w-52 m-auto"
+        />
+        <Text className="text-center text-2xl mt-10"> Welcome to My App</Text>
+      </View>
     </View>
   );
 }
