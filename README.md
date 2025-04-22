@@ -2,19 +2,14 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app). It is specifically designed to demonstrate Supabase email login and logout functionality using React Native, Expo, and NativeWind for styling.
 
-## Screenshots
 
-Here are some screenshots of the app:
+### App Screenshots
 
-   ### Splash Screen
-  
-
-   ### Login Screen
-   
-
-   ### Home Screen
-   
-
+<div style="display: flex; justify-content: space-between; gap: 10px;">
+  <img src="https://github.com/user-attachments/assets/97c33e46-beaf-49ea-88be-882da182e527" alt="Splash Screen" width="30%" />
+  <img src="https://github.com/user-attachments/assets/d1562fe3-a953-443f-91ec-0aada2a64a5f" alt="Login Screen" width="30%" />
+  <img src="https://github.com/user-attachments/assets/8b88fb85-9b5e-40ae-88b1-90e96c8590bf" alt="Home Screen" width="30%" />
+</div>
 
 ## Get started
 
