@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
   Alert,
   Image,
   ScrollView,
@@ -13,37 +14,42 @@ import { supabase } from "@/lib/superbase";
 import { router } from "expo-router";
 import Entypo from "@expo/vector-icons/Entypo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import LoadingPopup from "@/components/LoadingPopup";
 
 export default function auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState ("");
   const [loading, setLoading] = useState(false);
 
   async function signInWithEmail() {
     setLoading(true);
+    setMessage ("Signing In")
     const { error, data } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
     if (error) Alert.alert(error.message);
     setLoading(false);
+    setMessage ("")
     if (data.session) router.replace("/(app)/homepage");
   }
-
+  
   async function signUpWithEmail() {
     setLoading(true);
+    setMessage ("Signing Up")
     const {
       data: { session },
       error,
     } = await supabase.auth.signUp({
       email: email,
-      password: password,
+      password: password
     });
-
+    
     if (error) Alert.alert(error.message);
-    if (!session)
-      Alert.alert("Please check your inbox for email verification!");
+    if (!session) Alert.alert("Success! Sign In now");
     setLoading(false);
+    setMessage ("")
   }
 
   return (
@@ -82,17 +88,20 @@ export default function auth() {
           <TouchableOpacity
             className="p-4 w-full rounded-lg border border-cyan-600 my-2"
             onPress={() => signInWithEmail()}
+            disabled={loading}
           >
             <Text className="text-center font-semibold">Sign In</Text>
           </TouchableOpacity>
           <TouchableOpacity
             className="p-4 w-full rounded-lg bg-[#7AC6D2]"
             onPress={() => signUpWithEmail()}
+            disabled={loading}
           >
             <Text className="text-center font-semibold">Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>
+      <LoadingPopup visible={loading} message={message}/> 
     </ScrollView>
   );
 }
